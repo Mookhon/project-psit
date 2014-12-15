@@ -13,18 +13,20 @@ def temperature():
     
     #input checker
     for i in temp.get():
-        if i not in allowed:
+        if i not in allowed or temp.get() == '-.' or temp.get() == '.-':
             fault = 1
         elif i == '.':
             dot += 1
         elif i == '-':
             dash += 1
+        elif '-' in temp.get() and temp.get()[0] != '-':
+            fault = 1
             
     #input error
     if len(temp.get()) > 12:
         tkMessageBox.showinfo(message='Support Only 12 Digit.')
         return
-    elif fault == 1 or dot > 1 or dash > 1 or temp.get() == '.':
+    elif fault == 1 or dot > 1 or dash > 1 or temp.get() == '.' or temp.get() == '-':
         tkMessageBox.showinfo(message='Incorrect Input \n Please Try Again.')
         return
     elif temp.get() == '':
@@ -222,8 +224,7 @@ mLabel3 = Label(text='Faculty of Information Technology @ KMITL',bg='#FFFFFF').p
 
 #temperature input
 tlabel = Label(text='Input Temperature',fg='black',bg='#FFFFFF',font=tkFont.Font(size=12)).place(x=40,y=125)
-var_temp = DoubleVar()
-temp = Entry(mGui, textvariable=var_temp)
+temp = Entry(mGui)
 temp.pack(pady = 50)
 
 #box unit
